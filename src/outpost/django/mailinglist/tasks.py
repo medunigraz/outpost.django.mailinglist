@@ -40,9 +40,11 @@ class MailinglistTasks:
             ] = f"Automatically managed list for {ml.organization}"
             mlist.settings.save()
             existing = set((m.email for m in mlist.members))
-            proposed = set(
-                (p.email for p in ml.organization.persons.filter(employed=True))
-            )
+            names = {
+                p.email: f"{p.last_name}, {p.first_name}"
+                for p in ml.organization.persons.filter(employed=True)
+            }
+            proposed = set(names.keys())
             add = proposed - existing
             remove = existing - proposed
             for email in add:
@@ -50,6 +52,7 @@ class MailinglistTasks:
                 if not dry_run:
                     mlist.subscribe(
                         email,
+                        display_name=names.get(email),
                         pre_verified=True,
                         pre_confirmed=True,
                         pre_approved=True,
