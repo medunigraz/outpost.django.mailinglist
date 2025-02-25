@@ -48,11 +48,17 @@ class MailinglistTasks:
             for email in add:
                 logger.debug(f"Subscribing {email} to {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.subscribe(email, pre_verified=True, pre_confirmed=True)
+                    mlist.subscribe(
+                        email,
+                        pre_verified=True,
+                        pre_confirmed=True,
+                        pre_approved=True,
+                        invitation=False,
+                    )
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email)
+                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
             existing = set((m.email for m in mlist.moderators if m.email))
             proposed = set(
                 (m.email for m in ml.moderators.filter(employed=True) if m.email)
@@ -117,14 +123,17 @@ class MailinglistTasks:
             for email in add:
                 logger.debug(f"Subscribing {email} to {mlist.fqdn_listname}")
                 if not dry_run:
-                    result = mlist.subscribe(
-                        email, pre_verified=True, pre_confirmed=True
+                    mlist.subscribe(
+                        email,
+                        pre_verified=True,
+                        pre_confirmed=True,
+                        pre_approved=True,
+                        invitation=False,
                     )
-                    mlist.moderate_request(result.get("token"), "accept")
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email)
+                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
 
     @shared_task(
         bind=True, ignore_result=False, name=f"{__name__}.Mailinglist:personal"
@@ -177,11 +186,14 @@ class MailinglistTasks:
             for email in add:
                 logger.debug(f"Subscribing {email} to {mlist.fqdn_listname}")
                 if not dry_run:
-                    result = mlist.subscribe(
-                        email, pre_verified=True, pre_confirmed=True
+                    mlist.subscribe(
+                        email,
+                        pre_verified=True,
+                        pre_confirmed=True,
+                        pre_approved=True,
+                        invitation=False,
                     )
-                    mlist.moderate_request(result.get("token"), "accept")
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email)
+                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
