@@ -62,8 +62,7 @@ class MailinglistTasks:
             for email in add:
                 logger.debug(f"Adding moderator {email} to {mlist.fqdn_listname}")
                 if not dry_run:
-                    result = mlist.add_moderator(email)
-                    mlist.moderate_request(result.get("token"), "accept")
+                    mlist.add_moderator(email)
             for email in remove:
                 logger.debug(f"Removing moderator {email} from {mlist.fqdn_listname}")
                 if not dry_run:
