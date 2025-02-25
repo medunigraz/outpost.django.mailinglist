@@ -41,7 +41,7 @@ class MailinglistTasks:
             mlist.settings.save()
             existing = set((m.email for m in mlist.members))
             names = {
-                p.email: f"{p.last_name}, {p.first_name}"
+                p.email.lower(): f"{p.last_name}, {p.first_name}"
                 for p in ml.organization.persons.filter(employed=True)
             }
             proposed = set(names.keys())
@@ -119,7 +119,7 @@ class MailinglistTasks:
             mlist.settings.save()
             existing = set((m.email for m in mlist.members if m.email))
             proposed = set(
-                (s.email for s in campusonline.Student.objects.all() if s.email)
+                (s.email.lower() for s in campusonline.Student.objects.all() if s.email)
             )
             add = proposed - existing
             remove = existing - proposed
@@ -183,7 +183,7 @@ class MailinglistTasks:
             existing = set((m.email for m in mlist.members if m.email))
             proposed = set(
                 (
-                    p.email
+                    p.email.lower()
                     for p in campusonline.Person.objects.filter(employed=True)
                     if p.email
                 )
