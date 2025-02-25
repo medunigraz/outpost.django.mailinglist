@@ -182,7 +182,11 @@ class MailinglistTasks:
             mlist.settings.save()
             existing = set((m.email for m in mlist.members if m.email))
             proposed = set(
-                (p.email for p in campusonline.Student.objects.all() if p.email)
+                (
+                    p.email
+                    for p in campusonline.Person.objects.filter(employed=True)
+                    if p.email
+                )
             )
             add = proposed - existing
             remove = existing - proposed
