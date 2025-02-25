@@ -61,7 +61,7 @@ class MailinglistTasks:
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
+                    mlist.unsubscribe(email, pre_approved=True)
             existing = set((m.email for m in mlist.moderators if m.email))
             proposed = set(
                 (m.email for m in ml.moderators.filter(employed=True) if m.email)
@@ -136,7 +136,7 @@ class MailinglistTasks:
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
+                    mlist.unsubscribe(email, pre_approved=True)
 
     @shared_task(
         bind=True, ignore_result=False, name=f"{__name__}.Mailinglist:personal"
@@ -199,4 +199,4 @@ class MailinglistTasks:
             for email in remove:
                 logger.debug(f"Unsubscribing {email} from {mlist.fqdn_listname}")
                 if not dry_run:
-                    mlist.unsubscribe(email, pre_confirmed=True, pre_approved=True)
+                    mlist.unsubscribe(email, pre_approved=True)
