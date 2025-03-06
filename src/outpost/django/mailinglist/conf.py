@@ -14,7 +14,7 @@ class MailinglistAppConf(AppConf):
         "administrivia": True,
         "advertised": False,
         "allow_list_posts": False,
-        "anonymous_list": True,
+        "anonymous_list": False,
         "archive_policy": "never",
         "archive_rendering_mode": "text",
         "autorespond_owner": "none",
