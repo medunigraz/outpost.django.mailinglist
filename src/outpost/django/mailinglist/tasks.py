@@ -35,9 +35,9 @@ class MailinglistTasks:
                 logger.debug(f"Setting {k} to {v} on {mlist}")
                 mlist.settings[k] = v
             mlist.settings["display_name"] = str(ml.organization)
-            mlist.settings[
-                "description"
-            ] = f"Automatically managed list for {ml.organization}"
+            mlist.settings["description"] = (
+                f"Automatically managed list for {ml.organization}"
+            )
             mlist.settings.save()
             existing = set((m.email for m in mlist.members))
             names = {
