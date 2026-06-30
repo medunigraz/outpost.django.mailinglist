@@ -6,7 +6,6 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("campusonline", "0079_alter_event_options"),
         ("mailinglist", "0001_initial"),
     ]
 
